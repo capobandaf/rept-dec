@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>_Periodic decimal number converter</title>
+    <script type="module" src="PeriodicDecimal.mjs" defer></script>
+    <script type="module" src="index.mjs" defer></script>
+    <script type="module" src="translation.mjs" defer></script>
+    <link href="index.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <h1 id="top_heading_id">_Convert between periodic decimal number and quotient</h1>
+    <form>
+    <p>
+      <input type="radio" id="point_id" name="separators" value="." checked>
+      <label for="point_id" id="point_Label_id">_point (.) is decimal separator (1.0)</label>
+    </p>
+    
+    <p>
+      <input type="radio" id="comma_id" name="separators" value=",">
+      <label for="comma_id" id="comma_label_id">_comma (,) is decimal separator (1,0)</label>
+    </p>
+  </form>
+    
+    <h2 id="period_title_id">_Periodic to quotient</h1>
+    <p>
+        <label for="period_input_name" id="period_input_label">_Periodic number</label>
+        <input type="text" id="period_input_id" name="period_input_name" value="3.2(1)">
+        <button id="period_button_id">_Convert</button>
+    </p>
+    <p>
+        <span id="period_output_label">_As quotient</span>:
+        <span id="period_output_field">289/90</span>
+    </p>
+    
+    <h2 id="quot_title_id">_Quotient to periodic</h1>
+    <p>
+        <label for="quot_input_name" id="quot_input_label">_Quotient</label>
+        <input type="text" id="quot_input_id" name="quot_input_name" value="289/90">
+        <button id="quot_button_id">_Convert</button>
+    </p>
+    <p>
+        <label for="m_period_name" id="m_period_input_label">_Max period length</label>
+        <input type="text" id="m_period_input_id" name="m_period_input_name" value="1000000">
+    </p>
+    <p>
+        <span id="quot_output_label">_As decimal</span>:
+        <span id="quot_output_field">3.2(1)</span>
+    </p>
+    
+
+  </body>
+</html>
