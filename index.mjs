@@ -19,7 +19,6 @@ function convertPeriodic () {
     document.getElementById('period_output_field').innerText = outputS;
 }
 
-//********************************************************************************************
 
 function convertQuotient () {
     let inputS = document.getElementById('quot_input_id').value;
@@ -43,6 +42,7 @@ function convertQuotient () {
 function registerHandlers () {
     document.getElementById('period_button_id').addEventListener('click', convertPeriodic);
     document.getElementById('quot_button_id').addEventListener('click', convertQuotient);
+    document.getElementById('langs_id').addEventListener('change', localizeToLang);
 }
 
 /** The function localizes the status code to the current language */
@@ -60,19 +60,14 @@ function localizedStatus (statusN) {
 }
 
 
-
-function localize () {
-    let langS = navigator.language;
-    userLangS = langS.split('-')[0];
+/**The function localizes the status code to the given language.
+ * It does NOT check if the language is in translationO from translation.mjs.
+ * In translationO are curently en, de, it, sl*/
+function localize (selectLangS) {
     for (let keyS in translationO) {
         let oneO = translationO[keyS];
         let prevod = '';
-        if (userLangS in oneO) {
-            prevod = oneO[userLangS];
-        }
-        if (prevod.length === 0) {
-            prevod = oneO['en']
-        }
+        prevod = oneO[selectLangS];
         if (keyS === 'title') {
             document.title = prevod;
         } else {
@@ -85,5 +80,23 @@ function localize () {
     }
 }
 
-localize ()
+
+function localizeStartup () {
+    let langS = navigator.language;
+    userLangS = langS.split('-')[0];
+    if (! (userLangS in translationO['title'])) {
+        userLangS = 'en';
+    }
+    localize(userLangS);
+    document.getElementById("langs_id").value = userLangS;
+}
+
+
+function localizeToLang () {
+    let langsElem = document.getElementById('langs_id');
+    let langCode = langsElem.value;
+    localize(langCode);
+}
+
+localizeStartup ()
 registerHandlers ();
