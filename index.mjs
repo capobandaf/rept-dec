@@ -1,7 +1,8 @@
 "strict"
 
 import {PeriodicDecimal} from './PeriodicDecimal.mjs'
-import {translationO, statusCodeO} from './translation.mjs'
+import {translationO, statusCodeO, defaultSeparatorO} from './translation.mjs'
+import {examples} from './examples.mjs'
 
 let userLangS = 'en';
 
@@ -19,8 +20,9 @@ function convertPeriodic () {
     document.getElementById('period_output_field').innerText = outputS;
 }
 
-
 function convertQuotient () {
+
+
     let inputS = document.getElementById('quot_input_id').value;
     let maxPeriodS = document.getElementById('m_period_input_id').value;
     let pointCheckedB = document.getElementById('point_id').checked;
@@ -42,6 +44,8 @@ function convertQuotient () {
 function registerHandlers () {
     document.getElementById('period_button_id').addEventListener('click', convertPeriodic);
     document.getElementById('quot_button_id').addEventListener('click', convertQuotient);
+    document.getElementById('period_example_button_id').addEventListener('click', changeExample);
+    document.getElementById('quot_example_button_id').addEventListener('click', changeExample);
     document.getElementById('langs_id').addEventListener('change', localizeToLang);
 }
 
@@ -58,7 +62,6 @@ function localizedStatus (statusN) {
     }
     return prevod;
 }
-
 
 /**The function localizes the status code to the given language.
  * It does NOT check if the language is in translationO from translation.mjs.
@@ -77,6 +80,63 @@ function localize (selectLangS) {
             }
             elemO.innerText = prevod
         }
+    }
+    let separatorS = defaultSeparatorO[selectLangS];
+    let pointElem = document.getElementById('point_id');
+    let commaElem = document.getElementById('comma_id');
+    if (separatorS === '.') {
+        pointElem.checked = true;
+    } else {
+        commaElem.checked = true;
+    }
+}
+
+
+function localizeSeparator(periodicNum) {
+    let pointElem = document.getElementById('point_id');
+    
+    if (pointElem.checked) {
+
+    }
+}
+
+
+function changeExample (event) {
+    let srcElement = event.srcElement;
+    let exampleId = Number(srcElement.dataset.iex);
+    let buttonId = srcElement.id;
+
+    let inputId = buttonId.replace (/_example_button_/, '_input_');
+    let outputId = buttonId.replace (/_example_button_id/, '_output_field');
+
+    let inputElem = document.getElementById(inputId);
+    let outputElem = document.getElementById(outputId);
+
+    if (inputElem === null) {
+        console.log('Internal error: no inputElem');
+        return;
+    }
+    if (outputElem === null) {
+        console.log('Internal error: no outputElem');
+        return;
+    }
+
+    if (exampleId === (examples.length-1)) {
+        exampleId = 0;
+        srcElement.dataset.iex = String(exampleId);
+    } 
+    else {
+        exampleId++;
+        srcElement.dataset.iex = String(exampleId);
+    }
+
+    if (buttonId === "period_example_button_id") {
+        inputElem.value = examples[exampleId].per;
+        outputElem.innerText = examples[exampleId].quot;
+    }
+    if (buttonId === "quot_example_button_id") {
+        inputElem.value = examples[exampleId].quot;
+        outputElem.innerText = examples[exampleId].per;
     }
 }
 
