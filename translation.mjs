@@ -43,8 +43,8 @@ export let translationO = {
     },
     period_example_button_id: {
         en:"More examples",
-        de:"",
-        it:"",
+        de:"Mehr Beispiele",
+        it:"Più esempi",
         sl:"Več primerov",
     },
     period_output_label: {
@@ -73,8 +73,8 @@ export let translationO = {
     },
     quot_example_button_id: {
         en:"More examples",
-        de:"",
-        it:"",
+        de:"Mehr Beispiele",
+        it:"Più esempi",
         sl:"Več primerov",
     },
 
