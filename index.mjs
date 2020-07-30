@@ -47,6 +47,8 @@ function registerHandlers () {
     document.getElementById('period_example_button_id').addEventListener('click', changeExample);
     document.getElementById('quot_example_button_id').addEventListener('click', changeExample);
     document.getElementById('langs_id').addEventListener('change', localizeToLang);
+    document.getElementById('comma_id').addEventListener('change', localizeSeparator);
+    document.getElementById('point_id').addEventListener('change', localizeSeparator);
 }
 
 /** The function localizes the status code to the current language */
@@ -89,14 +91,23 @@ function localize (selectLangS) {
     } else {
         commaElem.checked = true;
     }
+    localizeSeparator();
 }
 
 
-function localizeSeparator(periodicNum) {
+function localizeSeparator() {
     let pointElem = document.getElementById('point_id');
-    
-    if (pointElem.checked) {
-
+    let decimalPoint;
+    if (pointElem.checked) {   
+        decimalPoint = document.getElementById('period_input_id').value.replace(/,/, '.');
+        document.getElementById('period_input_id').value = decimalPoint;
+        decimalPoint = document.getElementById('quot_output_field').innerText.replace(/,/, '.');
+        document.getElementById('quot_output_field').innerText = decimalPoint;
+    } else {
+        decimalPoint = (document.getElementById('period_input_id').value).replace(/\./, ',');
+        document.getElementById('period_input_id').value = decimalPoint;
+        decimalPoint = document.getElementById('quot_output_field').innerText.replace(/\./, ',');
+        document.getElementById('quot_output_field').innerText = decimalPoint;
     }
 }
 
@@ -138,6 +149,7 @@ function changeExample (event) {
         inputElem.value = examples[exampleId].quot;
         outputElem.innerText = examples[exampleId].per;
     }
+    localizeSeparator();
 }
 
 
@@ -147,8 +159,8 @@ function localizeStartup () {
     if (! (userLangS in translationO['title'])) {
         userLangS = 'en';
     }
-    localize(userLangS);
     document.getElementById("langs_id").value = userLangS;
+    localize(userLangS);
 }
 
 
